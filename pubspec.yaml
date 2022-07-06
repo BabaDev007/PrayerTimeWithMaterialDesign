@@ -72,11 +72,12 @@ dev_dependencies:
   get_storage: any
 #  pdfviewer
   syncfusion_flutter_pdfviewer: ^20.1.58-beta
-
+# slider
+  sleek_circular_slider: any
 # slimy_card:
   flutter_slimy_card: any
   flutter_icons: any
-
+  animated_flip_counter: any
 # The following section is specific to Flutter packages.
 flutter:
 
