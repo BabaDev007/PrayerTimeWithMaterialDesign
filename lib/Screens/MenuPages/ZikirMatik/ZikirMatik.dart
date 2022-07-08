@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:namazvaxti0521/Screens/MenuPages/ZikirMatik/Buttons.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/services.dart'; // we need this for the vibrations
 import 'dart:io'; // we need this for the sleep method
+import 'package:audioplayers/audioplayers.dart';
 
 
 class ZikrPage extends StatefulWidget {
@@ -14,6 +16,7 @@ class ZikrPage extends StatefulWidget {
 }
 
 class _ZikrPageState extends State<ZikrPage> {
+  var _switchButton = AudioCache(prefix: "assets/music/") ;
   _PatternVibrate() {
     HapticFeedback.mediumImpact();
 
@@ -40,6 +43,7 @@ class _ZikrPageState extends State<ZikrPage> {
   int _counter = 0;
 
   void _incrementCounter() {
+    _iconButtonVibr ?_switchButton.play("s2.wav") :
     HapticFeedback.vibrate();
     setState(() {
       if(_counter >= 0 && _counter <100)
@@ -59,6 +63,7 @@ class _ZikrPageState extends State<ZikrPage> {
   }
 
   void _decrementCounter() {
+    _iconButtonVibr ?_switchButton.play("s2.wav") :
     HapticFeedback.vibrate();
     setState(() {
       if(_counter > 0 && _counter <=100)
@@ -76,12 +81,24 @@ class _ZikrPageState extends State<ZikrPage> {
   }
 
   void _restart() {
+    _iconButtonVibr ?_switchButton.play("s2.wav") :
     HapticFeedback.vibrate();
     setState(() {
       _counter = 0;
+      if(_counter >= 0 && _counter <= 33 ){
+        _zikr = "SübhanAllah";
+
+      }else if(_counter >= 33 && _counter <= 66){
+        _zikr = "Əlhəmdulillah";
+      }else if(_counter >= 66 && _counter <= 99){
+        _zikr = "Allahu Əkbər";
+      }
+    
     });
   }
- String _zikr = "SübhanAllah";
+
+  String _zikr = "SübhanAllah";
+  bool _iconButtonVibr = false;
 
 
 
@@ -90,11 +107,28 @@ class _ZikrPageState extends State<ZikrPage> {
     @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+
 
     return Scaffold(
       extendBodyBehindAppBar: true,
 
       appBar: AppBar(
+        actions: [
+
+          IconButton(onPressed: (){
+            setState((){
+              _iconButtonVibr = !_iconButtonVibr;
+
+            });
+          }, icon: AnimatedCrossFade(firstChild: Icon(Icons.vibration), secondChild: Icon(Icons.music_note_outlined),
+      crossFadeState: _iconButtonVibr ? CrossFadeState.showFirst : CrossFadeState.showSecond, duration: Duration(milliseconds: 300),
+
+    )
+
+
+          )],
+
         centerTitle: true,
         title: Text("Zikrmat", textAlign: TextAlign.center ,style: TextStyle(
           fontSize: 25,
@@ -189,48 +223,42 @@ class _ZikrPageState extends State<ZikrPage> {
               ),
               
               Padding(
-                padding: const EdgeInsets.all(60.0),
+                padding: EdgeInsets.all(30.0),
                 child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
 
-                        FloatingActionButton(
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          onPressed: _decrementCounter,
-                          child:  Icon(
-                            Icons.remove,
-                            size: w/6,
+                           Expanded(child: ZikrButton(metod: _decrementCounter, buttonName: "-", )),
+
+
+
+                          Expanded(
+                            child: FloatingActionButton(
+                                mini: true,
+                                backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                onPressed: _restart,
+                                child:  Icon(
+                                  Icons.restart_alt,
+                                  size: w/10,
+                                ),
+                              ),
                           ),
-                        ),
 
 
+                         Expanded(child: ZikrButton(metod: _incrementCounter, buttonName: "+"))
 
-                      FloatingActionButton(
-                          mini: true,
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          onPressed: _restart,
-                          child:  Icon(
-                            Icons.restart_alt,
-                            size: w/10,
-                          ),
-                        ),
-
-
-                      FloatingActionButton(
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          onPressed: _incrementCounter,
-                          child:  Icon(
-                            Icons.add,
-                            size: w/6,
-                          ),
-                        ),
-
+                        ],
+                      ),
+                      SizedBox(
+                        height: h/9 ,
+                      )
                     ],
                   ),
                 ),

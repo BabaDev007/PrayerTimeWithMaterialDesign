@@ -25,15 +25,16 @@ class BackDropLayerContent extends StatelessWidget {
 
 
       children: [
-        MenuListTile(icon: Icon(Icons.abc) , title: "Esmail-Hüsna",widget: EsmaScreen(),),
-        MenuListTile(icon: Icon(Icons.add_circle_outline) , title: "Elektron Təsbeh",widget: ZikrPage(),),
-        MenuListTile(icon: Icon(Icons.movie_creation_outlined), title: "Dini Filmlər",widget: Movies(),),
-        MenuListTile(icon: Icon(Icons.link), title: "Faydalı Keçidlər",widget: UsefulLinks(),),
-        UrlLauncherTile(icon: Icon(Icons.question_answer_outlined), title: "Sual Göndər", path: 'https://form.jotform.com/203285791454461',),
-        MenuListTile(icon: Icon(Icons.info_outline_rounded), title: "Namaz Vaxtları",widget: AboutPrayerTimes(),),
-        MenuListTile(icon: Icon(Icons.feedback_outlined), title: "Fikir Bildir",widget: FeedbackPage(),),
-        MenuListTileSHare(title: "Paylaş", icon: Icon(Icons.share_outlined)),
-        MenuListTile(icon: Icon(Icons.info_outline_rounded), title: "İnfo",widget: QiblahCompass(),),
+        MenuListTile(icon: Icon(Icons.abc, color: Colors.blue.shade300,) , title: "Esmail-Hüsna",widget: EsmaScreen(),),
+        MenuListTile(icon: Icon(Icons.movie_creation_outlined, color: Colors.blue.shade300), title: "Dini Filmlər",widget: Movies(),),
+        MenuListTile(icon: Icon(Icons.info_outline_rounded, color: Colors.blue.shade300), title: "Namaz Vaxtları",widget: AboutPrayerTimes(),),
+        MenuListTile(icon: Icon(Icons.link, color: Colors.blue.shade300), title: "Faydalı Keçidlər",widget: UsefulLinks(),),
+        UrlLauncherTile(icon: Icon(Icons.question_answer_outlined, color: Colors.blue.shade300), title: "Sual Göndər", path: 'https://form.jotform.com/203285791454461',),
+        MenuListTile(icon: Icon(Icons.feedback_outlined, color: Colors.blue.shade300), title: "Əlaqə",widget: FeedbackPage(),),
+        MenuListTileSHare(title: "Paylaş", icon: Icon(Icons.share_outlined, color: Colors.blue.shade300)),
+        MenuListTile(icon: Icon(Icons.info_outline_rounded, color: Colors.blue.shade300), title: "İnfo",widget: QiblahCompass(),),
+        MenuTile(title: "Version", icon: Icon(Icons.verified_outlined, color: Colors.blue.shade300), )
+
 
 
 

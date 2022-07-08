@@ -11,8 +11,10 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:namazvaxti0521/Screens/MenuPages/Books/BookList.dart';
 import 'package:namazvaxti0521/Screens/MenuPages/KompassScreen/qiblah_compass.dart';
 import 'package:namazvaxti0521/Screens/MenuPages/ReligionThemes/ReligionThemes.dart';
+import '../../PageTransition/PageTransition.dart';
 import '../../StateManagement/StateManagement.dart';
 import '../../ThemeService/ThemeDataService.dart';
+import '../MenuPages/ZikirMatik/ZikirMatik.dart';
 
 class HomeScreen extends StatefulWidget  {
   @override
@@ -20,6 +22,7 @@ class HomeScreen extends StatefulWidget  {
 }
 
 class _HomeScreenState extends State<HomeScreen>with SingleTickerProviderStateMixin {
+
   var PWcontroller;
   late final   controller = AnimationController(vsync: this, duration: Duration(seconds: 1));
   late int _currentIndex = 0;
@@ -41,9 +44,37 @@ class _HomeScreenState extends State<HomeScreen>with SingleTickerProviderStateMi
 
   @override
   Widget build(BuildContext context) {
+    Future<bool> showExitPopup() async {
+      return await showDialog( //show confirm dialogue
+        //the return value will be from "Yes" or "No" options
+        context: context,
+        builder: (context) => AlertDialog(
+
+          title: Center(child: Text('Çıxış')),
+          content: Text('Tətbiqdən çıxış etmək istəyirsiniz ?'),
+          actions:[
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              //return false when click on "NO"
+              child:Text('Xeyr'),
+            ),
+
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              //return true when click on "Yes"
+              child:Text('Bəli'),
+            ),
+
+          ],
+        ),
+      )??false; //if showDialouge had returned null, then return false
+    }
+
+    return WillPopScope(
+        onWillPop: showExitPopup,
+    child:  BackdropScaffold(
 
 
-    return BackdropScaffold(
       frontLayerScrim: Colors.blue,
 
       onBackLayerRevealed: (){
@@ -71,6 +102,20 @@ class _HomeScreenState extends State<HomeScreen>with SingleTickerProviderStateMi
         centerTitle: true,
         title: Title(name: name,),
         actions: [
+          InkWell(
+            onTap: (){
+              Navigator.of(context).push(SizeTransition3(ZikrPage()));
+
+            },
+            child: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              maxRadius: 15,
+
+              child:
+              Image.asset('assets/bookPng/tesbih.png'),
+            ),
+          ),
+
           GestureDetector(
               onTap: (){
 
@@ -173,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen>with SingleTickerProviderStateMi
             ),
           ),
 
-    );
+    ));
 
 
   }
@@ -212,14 +257,19 @@ class _TitleState extends State<Title> {
       crossFadeState:  widget.name  ? CrossFadeState.showFirst : CrossFadeState.showSecond ,
 
 
-      firstChild: Container( child: Text("NamazVaxtı"), padding: PaddingManager().titlePadding,  decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10), color: Colors.lightBlue.shade100,
-
-      )),
-      secondChild: Container( child: Text("Menu"), padding: PaddingManager().titlePadding,  decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10), color: Colors.lightBlue.shade100,
-
-      )),
+      firstChild: Card(
+        color: Colors.lightBlueAccent,
+        shape: StadiumBorder(),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("Gözel İslam", style: Theme.of(context).textTheme.headline5?.copyWith(color: Colors.white),),
+          ), ),
+      secondChild: Card(
+        shape: StadiumBorder(),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text("Menu", style: Theme.of(context).textTheme.headline5,),
+        ), ),
     );
   }
 }

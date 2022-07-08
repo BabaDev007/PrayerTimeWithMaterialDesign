@@ -45,3 +45,39 @@ class MenuListTile extends StatelessWidget {
   }
 }
 
+class MenuTile extends StatelessWidget {
+
+  final String title;
+  final Icon icon;
+
+
+  MenuTile({required this.title, required this.icon, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return  Padding(
+        padding: PaddingManager().prayerTimeWidgetPadding,
+        child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).errorColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.blue.withOpacity(.2),
+                  blurRadius: 30,
+                  offset: Offset(20, 30),
+                ),
+              ],
+              borderRadius: BorderRadius.circular(20),
+            ),
+
+
+            child: ListTile(
+              leading: icon,
+              title: Text(title),
+              trailing: Text("1.0.0", style: TextStyle(color: Colors.black54),),
+
+            )));
+  }
+
+}
+

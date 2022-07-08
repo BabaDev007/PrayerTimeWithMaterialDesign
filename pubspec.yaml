@@ -78,6 +78,8 @@ dev_dependencies:
   flutter_slimy_card: any
   flutter_icons: any
   animated_flip_counter: any
+  awesome_dialog: any
+  audioplayers: ^0.20.1
 # The following section is specific to Flutter packages.
 flutter:
 
@@ -90,7 +92,7 @@ flutter:
   assets:
     - assets/
     - assets/bookPng/
-
+    - assets/music/s2.wav
 
 
 
