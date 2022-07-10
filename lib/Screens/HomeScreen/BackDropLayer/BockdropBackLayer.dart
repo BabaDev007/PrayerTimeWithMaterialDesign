@@ -25,7 +25,6 @@ class BackDropLayerContent extends StatelessWidget {
 
 
       children: [
-        MenuListTile(icon: Icon(Icons.abc, color: Colors.blue.shade300,) , title: "Esmail-Hüsna",widget: EsmaScreen(),),
         MenuListTile(icon: Icon(Icons.movie_creation_outlined, color: Colors.blue.shade300), title: "Dini Filmlər",widget: Movies(),),
         MenuListTile(icon: Icon(Icons.info_outline_rounded, color: Colors.blue.shade300), title: "Namaz Vaxtları",widget: AboutPrayerTimes(),),
         MenuListTile(icon: Icon(Icons.link, color: Colors.blue.shade300), title: "Faydalı Keçidlər",widget: UsefulLinks(),),

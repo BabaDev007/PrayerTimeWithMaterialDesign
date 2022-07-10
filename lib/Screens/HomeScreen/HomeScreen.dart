@@ -1,20 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:namazvaxti0521/Constants.dart';
-import 'package:namazvaxti0521/PaddingManager.dart';
-import 'package:namazvaxti0521/Screens/HomeScreen/BackDropLayer/BockdropBackLayer.dart';
-import 'package:namazvaxti0521/Screens/HomeScreen/HomeScreenBody.dart';
-import 'package:backdrop/backdrop.dart';
 import 'package:lottie/lottie.dart';
 import 'package:get/get.dart';
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:namazvaxti0521/Screens/MenuPages/Books/BookList.dart';
-import 'package:namazvaxti0521/Screens/MenuPages/KompassScreen/qiblah_compass.dart';
-import 'package:namazvaxti0521/Screens/MenuPages/ReligionThemes/ReligionThemes.dart';
-import '../../PageTransition/PageTransition.dart';
+import 'package:namazvaxti0521/Screens/MenuPages/Esmail_Husna/EsmaScreen.dart';
 import '../../StateManagement/StateManagement.dart';
 import '../../ThemeService/ThemeDataService.dart';
 import '../MenuPages/ZikirMatik/ZikirMatik.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import 'Widgets.dart';
 
 class HomeScreen extends StatefulWidget  {
   @override
@@ -22,258 +17,282 @@ class HomeScreen extends StatefulWidget  {
 }
 
 class _HomeScreenState extends State<HomeScreen>with SingleTickerProviderStateMixin {
-
-  var PWcontroller;
   late final   controller = AnimationController(vsync: this, duration: Duration(seconds: 1));
-  late int _currentIndex = 0;
-  bool name  = true;
-  bool isScroll = false;
-  void _setState(){
-    PWcontroller  = PageController();
-    setState((){
-
-    });
-  }
   HomePageController Scontroller = Get.put(HomePageController());
 
-  @override
-    initState(){
-    _setState();
-    super.initState();
+  Future<bool> showExitPopup() async {
+    return await showDialog( //show confirm dialogue
+      //the return value will be from "Yes" or "No" options
+      context: context,
+      builder: (context) => AlertDialog(
+
+        title: Center(child: Text('Çıxış')),
+        content: Text('Tətbiqdən çıxış etmək istəyirsiniz ?'),
+        actions:[
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            //return false when click on "NO"
+            child:Text('Xeyr'),
+          ),
+
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            //return true when click on "Yes"
+            child:Text('Bəli'),
+          ),
+
+        ],
+      ),
+    )??false; //if showDialouge had returned null, then return false
   }
+
 
   @override
   Widget build(BuildContext context) {
-    Future<bool> showExitPopup() async {
-      return await showDialog( //show confirm dialogue
-        //the return value will be from "Yes" or "No" options
-        context: context,
-        builder: (context) => AlertDialog(
-
-          title: Center(child: Text('Çıxış')),
-          content: Text('Tətbiqdən çıxış etmək istəyirsiniz ?'),
-          actions:[
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              //return false when click on "NO"
-              child:Text('Xeyr'),
-            ),
-
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              //return true when click on "Yes"
-              child:Text('Bəli'),
-            ),
-
-          ],
-        ),
-      )??false; //if showDialouge had returned null, then return false
-    }
+    var _w = MediaQuery.of(context).size.width;
+    var _h = MediaQuery.of(context).size.height;
 
     return WillPopScope(
         onWillPop: showExitPopup,
-    child:  BackdropScaffold(
+    child:  Scaffold(
+
+      backgroundColor: Colors.greenAccent.shade100,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+
+          centerTitle: true,
+          title: Text("Namaz Pro", style: Theme.of(context).textTheme.headline6?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),),
+          leading: Icon(Icons.menu_outlined, color: Colors.white, ),
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          elevation: 0,
 
 
-      frontLayerScrim: Colors.blue,
-
-      onBackLayerRevealed: (){
-        setState((){
-          name = false;
-        });
-      },
-      onBackLayerConcealed: (){
-        setState((){
-          name =true;
-        });
-      },
-      frontLayerBackgroundColor:Constants().scaffolColor,
-      backgroundColor: Colors.blue.shade300,
-      animationCurve: Curves.easeOutCubic,
-      backLayerBackgroundColor: Theme.of(context).hintColor,
-
-      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling ,
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
-
-
-      appBar: BackdropAppBar(
-         backgroundColor: Colors.blue.shade300,
-
-        centerTitle: true,
-        title: Title(name: name,),
         actions: [
-          InkWell(
-            onTap: (){
-              Navigator.of(context).push(SizeTransition3(ZikrPage()));
-
-            },
-            child: CircleAvatar(
-              backgroundColor: Colors.transparent,
-              maxRadius: 15,
-
-              child:
-              Image.asset('assets/bookPng/tesbih.png'),
-            ),
-          ),
-
           GestureDetector(
               onTap: (){
 
-                Get.isDarkMode ?  controller.animateTo(0) :  controller.animateTo(0.5);
+
+                Get.isDarkMode ?   controller.animateTo(0) :  controller.animateTo(0.5);
                 ThemeService().changeThemeMode();
               },
               child: Lottie.asset(
                   Constants().lottieasset, controller: controller,
-                fit: BoxFit.fill
+                  fit: BoxFit.fill
 
 
               )),
+
         ]
       ),
-      backLayer: BackDropLayerContent(),
-      frontLayer: PageView(physics: isScroll ? NeverScrollableScrollPhysics() : BouncingScrollPhysics(),
+     body:Stack(
+       alignment: Alignment.center,
+       children: [
+         Zorro(),
+         Zor(),
 
-        onPageChanged: (value){
-          setState((){
-            _currentIndex = value;
+         Align(
+           alignment: Alignment.bottomCenter,
+           child: Padding(
+             padding: const EdgeInsets.all(8.0),
+             child: Column(
+               mainAxisSize: MainAxisSize.min,
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+                 Expanded(
+                   flex: 2,
+                   child: Padding(
+                     padding: const EdgeInsets.all(4.0),
+                     child: SizedBox()
+                   ),
+                 ),
+                 Expanded(
+                   flex: 1,
+                   child: Padding(
+                     padding: const EdgeInsets.all(2.0),
+                     child: Center(
+                       child: Column(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         children: [
+                           Expanded(
+                             child: Row(
+                               children: [
+                                 Expanded(
+                                   child: Padding(
+                                     padding: const EdgeInsets.all(1.0),
+                                     child: Container(height: 70,
+                                       width: 50,
+                                       decoration: BoxDecoration(
+                                           color: Colors.white.withOpacity(0.5),
+                                           borderRadius: BorderRadius.all(Radius.circular(20))
 
-          });
+                                       ),
+                                     ),
+                                   ),
+                                 ),
+                                 Expanded(
+                                   child: Padding(
+                                     padding: const EdgeInsets.all(1.0),
+                                     child: Container(height: 70,
+                                       width: 50,
+                                       decoration: BoxDecoration(
+                                           color: Colors.white.withOpacity(0.5),
+                                           borderRadius: BorderRadius.all(Radius.circular(20))
 
-        },
-        controller: PWcontroller ,
-        children: [
-          HomeScreenBody(),
-          BookList(),
-          ReligionThemes("https://www.gozelislam.com", ""),
-          QiblahCompass()
+                                       ),
+                                     ),
+                                   ),
+                                 ),
+                                 Expanded(
+                                   child: Padding(
+                                     padding: const EdgeInsets.all(1.0),
+                                     child: Container(height: 70,
+                                       width: 50,
+                                       decoration: BoxDecoration(
+                                           color: Colors.white.withOpacity(0.5),
+                                           borderRadius: BorderRadius.all(Radius.circular(20))
 
+                                       ),
+                                     ),
+                                   ),
+                                 ),
+                               ],
+                             ),
+                           ),
+                           Expanded(
+                             child: Row(
+                               children: [
+                                 Expanded(
+                                   child: Padding(
+                                     padding: const EdgeInsets.all(1.0),
+                                     child: Container(height: 70,
+                                       width: 50,
+                                       decoration: BoxDecoration(
+                                           color: Colors.white.withOpacity(0.5),
+                                           borderRadius: BorderRadius.all(Radius.circular(20))
 
-        ],
-      ),
+                                       ),
+                                     ),
+                                   ),
+                                 ),
+                                 Expanded(
+                                   child: Padding(
+                                     padding: const EdgeInsets.all(1.0),
+                                     child: Container(height: 70,
+                                       width: 50,
+                                       decoration: BoxDecoration(
+                                           color: Colors.white.withOpacity(0.5),
+                                           borderRadius: BorderRadius.all(Radius.circular(20))
 
+                                       ),
+                                     ),
+                                   ),
+                                 ),
+                                 Expanded(
+                                   child: Padding(
+                                     padding: const EdgeInsets.all(1.0),
+                                     child: Container(height: 70,
+                                       width: 50,
+                                       decoration: BoxDecoration(
+                                           color: Colors.white.withOpacity(0.5),
+                                           borderRadius: BorderRadius.all(Radius.circular(20))
 
-
-      bottomNavigationBar: Visibility(
-        visible: name,
-
-          child:  BottomNavyBar(
-              selectedIndex: _currentIndex,
-              showElevation: true,
-              itemCornerRadius: 24,
-              curve: Curves.linear,
-              onItemSelected: (index) => setState(() {
-                _currentIndex = index;
-                switch(_currentIndex ){
-                  case 0: PWcontroller.animateToPage(_currentIndex, curve: Curves.decelerate, duration: Duration(microseconds: 2000));
-                  setState((){
-                    isScroll = false;
-                  });
-                  break;
-                  case 1: PWcontroller.animateToPage(_currentIndex, curve: Curves.decelerate, duration: Duration(microseconds: 2000));
-                  setState((){
-                    isScroll = false;
-                  });
-                  break;
-                  case 2: PWcontroller.animateToPage(_currentIndex, curve: Curves.decelerate, duration: Duration(microseconds: 2000));
-                  setState((){
-                    isScroll = true;
-                  });
-                  break;
-                  case 3: PWcontroller.animateToPage(_currentIndex, curve: Curves.decelerate, duration: Duration(microseconds: 2000));
-                  setState((){
-                    isScroll = false;
-                  });
-                  break;
-                  default : PWcontroller.animateToPage(_currentIndex, curve: Curves.decelerate, duration: Duration(microseconds: 2000));
-                }
-              }),
-              items: <BottomNavyBarItem>[
-                BottomNavyBarItem(
-                  icon: Icon(Icons.apps),
-                  title: Text('Əsas'),
-                  activeColor: Colors.blue,
-                  textAlign: TextAlign.center,
-                ),
-                BottomNavyBarItem(
-                  icon: Icon(Icons.book_outlined),
-                  title: Text('Kitabxana '),
-                  activeColor: Colors.blue,
-                  textAlign: TextAlign.center,
-                ),
-                BottomNavyBarItem(
-                  icon:Icon(Icons.newspaper_outlined) ,
-                  title: Text(
-                    'Mövzular',
-                  ),
-                  activeColor: Colors.blue,
-                  textAlign: TextAlign.center,
-                ),
-                BottomNavyBarItem(
-                  icon: Icon(Icons.compass_calibration_outlined),
-                  title: Text('Kompas'),
-                  activeColor: Colors.blue,
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-
-    ));
-
-
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-class Title extends StatefulWidget {
-  const Title({Key? key, required this.name}) : super(key: key);
-  final bool name;
+                                       ),
+                                     ),
+                                   ),
+                                 ),
+                               ],
+                             ),
+                           )
+                         ],
+                       )
+                     ),
+                   ),
+                 ),
+                 Expanded(
+                   flex: 2 ,
+                   child: Padding(
+                     padding: const EdgeInsets.all(2.0),
+                     child: Container(
+                       child: Padding(
+                         padding: const EdgeInsets.symmetric(horizontal: 4),
+                         child: Column(
+                           mainAxisSize: MainAxisSize.min,
+                           mainAxisAlignment: MainAxisAlignment.center,
+                           children: [
+                             PrayerTimeWidget("Sübh", "05:05"),
+                             Padding(
+                               padding:  const EdgeInsets.symmetric(horizontal: 8.0),
+                               child: Divider(color: Colors.black12, thickness: 0.8,),
+                             ),
+                             PrayerTimeWidget("Günəş", "05:05"),
 
 
-
-  @override
-  State<Title> createState() => _TitleState();
-}
-
-class _TitleState extends State<Title> {
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedCrossFade(
-
-      duration: Duration(milliseconds:600 ),
-
-      crossFadeState:  widget.name  ? CrossFadeState.showFirst : CrossFadeState.showSecond ,
+                             Padding(
+                               padding:  const EdgeInsets.symmetric(horizontal: 8.0),
+                               child: Divider(color: Colors.black12, thickness: 0.8,),
+                             ),
+                             PrayerTimeWidget("Zöhr", "05:05"),
 
 
-      firstChild: Card(
-        color: Colors.lightBlueAccent,
-        shape: StadiumBorder(),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("Gözel İslam", style: Theme.of(context).textTheme.headline5?.copyWith(color: Colors.white),),
-          ), ),
-      secondChild: Card(
-        shape: StadiumBorder(),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text("Menu", style: Theme.of(context).textTheme.headline5,),
-        ), ),
+                             Padding(
+                               padding:  const EdgeInsets.symmetric(horizontal: 8.0),
+                               child: Divider(color: Colors.black12, thickness: 0.8,),
+                             ),
+                             PrayerTimeWidget("Əsr", "05:05"),
+
+                             Padding(
+                               padding:  const EdgeInsets.symmetric(horizontal: 8.0),
+                               child: Divider(color: Colors.black12, thickness: 0.8,),
+                             ),
+                             PrayerTimeWidget("Axşam(İftar)", "05:05"),
+
+                             Padding(
+                               padding:  const EdgeInsets.symmetric(horizontal: 8.0),
+                               child: Divider(color: Colors.black12, thickness: 0.8,),
+                             ),
+                             PrayerTimeWidget("İşa", "05:05"),
+
+
+                             Padding(
+                               padding:  const EdgeInsets.symmetric(horizontal: 8.0),
+                               child: Divider(color: Colors.black12, thickness: 0.8,),
+                             ),
+                             PrayerTimeWidget("Gecə Yarısı", "05:05"),
+
+
+
+
+
+                           ],
+                         ),
+                       ),
+
+                       width: _w,
+
+                       decoration: BoxDecoration(
+                           color: Colors.white.withOpacity(0.5),
+                           borderRadius: BorderRadius.all(Radius.circular(20))
+
+                       ),
+                     ),
+                   ),
+                 ),
+               ],
+             ),
+           ),
+         ),
+
+       ],
+     ),
+     )
+
+
+
+
+
     );
+
+
   }
 }
-
-
-
-

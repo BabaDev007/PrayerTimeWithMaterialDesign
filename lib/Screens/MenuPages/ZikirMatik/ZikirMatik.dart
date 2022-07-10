@@ -6,6 +6,7 @@ import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/services.dart'; // we need this for the vibrations
 import 'dart:io'; // we need this for the sleep method
 import 'package:audioplayers/audioplayers.dart';
+import 'package:get/get.dart';
 
 
 class ZikrPage extends StatefulWidget {
@@ -57,6 +58,15 @@ class _ZikrPageState extends State<ZikrPage> {
       }else if(_counter >= 66 && _counter <= 99){
         _zikr = "Allahu Əkbər";
       }else if(_counter == 100){
+        Get.snackbar(
+          "Tamamlandı", // title
+          "Namaz sonrası təsbihatı tamamladınız. Allahu Təala qəbul etsin", // message
+          icon: Icon(Icons.verified_outlined),
+          shouldIconPulse: true,
+          barBlur: 20,
+          isDismissible: true,
+          duration: Duration(seconds: 3),
+        );
         _zikr = "Lə İləhə illəlahü vəhdəhü lə şərikə ləh ləhül mülkü və ləhül həmdu və hüvə alə kulli şey'in qadir";
       }
     });
