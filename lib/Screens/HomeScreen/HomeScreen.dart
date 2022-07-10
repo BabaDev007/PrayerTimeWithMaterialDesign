@@ -108,106 +108,8 @@ class _HomeScreenState extends State<HomeScreen>with SingleTickerProviderStateMi
                  ),
                  Expanded(
                    flex: 1,
-                   child: Padding(
-                     padding: const EdgeInsets.all(2.0),
-                     child: Center(
-                       child: Column(
-                         mainAxisAlignment: MainAxisAlignment.center,
-                         children: [
-                           Expanded(
-                             child: Row(
-                               children: [
-                                 Expanded(
-                                   child: Padding(
-                                     padding: const EdgeInsets.all(1.0),
-                                     child: Container(height: 70,
-                                       width: 50,
-                                       decoration: BoxDecoration(
-                                           color: Colors.white.withOpacity(0.5),
-                                           borderRadius: BorderRadius.all(Radius.circular(20))
-
-                                       ),
-                                     ),
-                                   ),
-                                 ),
-                                 Expanded(
-                                   child: Padding(
-                                     padding: const EdgeInsets.all(1.0),
-                                     child: Container(height: 70,
-                                       width: 50,
-                                       decoration: BoxDecoration(
-                                           color: Colors.white.withOpacity(0.5),
-                                           borderRadius: BorderRadius.all(Radius.circular(20))
-
-                                       ),
-                                     ),
-                                   ),
-                                 ),
-                                 Expanded(
-                                   child: Padding(
-                                     padding: const EdgeInsets.all(1.0),
-                                     child: Container(height: 70,
-                                       width: 50,
-                                       decoration: BoxDecoration(
-                                           color: Colors.white.withOpacity(0.5),
-                                           borderRadius: BorderRadius.all(Radius.circular(20))
-
-                                       ),
-                                     ),
-                                   ),
-                                 ),
-                               ],
-                             ),
-                           ),
-                           Expanded(
-                             child: Row(
-                               children: [
-                                 Expanded(
-                                   child: Padding(
-                                     padding: const EdgeInsets.all(1.0),
-                                     child: Container(height: 70,
-                                       width: 50,
-                                       decoration: BoxDecoration(
-                                           color: Colors.white.withOpacity(0.5),
-                                           borderRadius: BorderRadius.all(Radius.circular(20))
-
-                                       ),
-                                     ),
-                                   ),
-                                 ),
-                                 Expanded(
-                                   child: Padding(
-                                     padding: const EdgeInsets.all(1.0),
-                                     child: Container(height: 70,
-                                       width: 50,
-                                       decoration: BoxDecoration(
-                                           color: Colors.white.withOpacity(0.5),
-                                           borderRadius: BorderRadius.all(Radius.circular(20))
-
-                                       ),
-                                     ),
-                                   ),
-                                 ),
-                                 Expanded(
-                                   child: Padding(
-                                     padding: const EdgeInsets.all(1.0),
-                                     child: Container(height: 70,
-                                       width: 50,
-                                       decoration: BoxDecoration(
-                                           color: Colors.white.withOpacity(0.5),
-                                           borderRadius: BorderRadius.all(Radius.circular(20))
-
-                                       ),
-                                     ),
-                                   ),
-                                 ),
-                               ],
-                             ),
-                           )
-                         ],
-                       )
-                     ),
-                   ),
+                  child:
+                  ButtonWidgets()
                  ),
                  Expanded(
                    flex: 2 ,
@@ -215,56 +117,59 @@ class _HomeScreenState extends State<HomeScreen>with SingleTickerProviderStateMi
                      padding: const EdgeInsets.all(2.0),
                      child: Container(
                        child: Padding(
-                         padding: const EdgeInsets.symmetric(horizontal: 4),
-                         child: Column(
-                           mainAxisSize: MainAxisSize.min,
-                           mainAxisAlignment: MainAxisAlignment.center,
-                           children: [
-                             PrayerTimeWidget("Sübh", "05:05"),
-                             Padding(
-                               padding:  const EdgeInsets.symmetric(horizontal: 8.0),
-                               child: Divider(color: Colors.black12, thickness: 0.8,),
-                             ),
-                             PrayerTimeWidget("Günəş", "05:05"),
+                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                         child: SingleChildScrollView(
+                           physics: BouncingScrollPhysics(),
+                           child: Column(
+                             mainAxisSize: MainAxisSize.min,
+                             mainAxisAlignment: MainAxisAlignment.center,
+                             children: [
+                               PrayerTimeWidget("Sübh", "05:05"),
+                               Padding(
+                                 padding:  const EdgeInsets.symmetric(horizontal: 8.0),
+                                 child: Divider(color: Colors.black12, thickness: 0.8,),
+                               ),
+                               PrayerTimeWidget("Günəş", "05:05"),
 
 
-                             Padding(
-                               padding:  const EdgeInsets.symmetric(horizontal: 8.0),
-                               child: Divider(color: Colors.black12, thickness: 0.8,),
-                             ),
-                             PrayerTimeWidget("Zöhr", "05:05"),
+                               Padding(
+                                 padding:  const EdgeInsets.symmetric(horizontal: 8.0),
+                                 child: Divider(color: Colors.black12, thickness: 0.8,),
+                               ),
+                               PrayerTimeWidget("Zöhr", "05:05"),
 
 
-                             Padding(
-                               padding:  const EdgeInsets.symmetric(horizontal: 8.0),
-                               child: Divider(color: Colors.black12, thickness: 0.8,),
-                             ),
-                             PrayerTimeWidget("Əsr", "05:05"),
+                               Padding(
+                                 padding:  const EdgeInsets.symmetric(horizontal: 8.0),
+                                 child: Divider(color: Colors.black12, thickness: 0.8,),
+                               ),
+                               PrayerTimeWidget("Əsr", "05:05"),
 
-                             Padding(
-                               padding:  const EdgeInsets.symmetric(horizontal: 8.0),
-                               child: Divider(color: Colors.black12, thickness: 0.8,),
-                             ),
-                             PrayerTimeWidget("Axşam(İftar)", "05:05"),
+                               Padding(
+                                 padding:  const EdgeInsets.symmetric(horizontal: 8.0),
+                                 child: Divider(color: Colors.black12, thickness: 0.8,),
+                               ),
+                               PrayerTimeWidget("Axşam(İftar)", "05:05"),
 
-                             Padding(
-                               padding:  const EdgeInsets.symmetric(horizontal: 8.0),
-                               child: Divider(color: Colors.black12, thickness: 0.8,),
-                             ),
-                             PrayerTimeWidget("İşa", "05:05"),
-
-
-                             Padding(
-                               padding:  const EdgeInsets.symmetric(horizontal: 8.0),
-                               child: Divider(color: Colors.black12, thickness: 0.8,),
-                             ),
-                             PrayerTimeWidget("Gecə Yarısı", "05:05"),
+                               Padding(
+                                 padding:  const EdgeInsets.symmetric(horizontal: 8.0),
+                                 child: Divider(color: Colors.black12, thickness: 0.8,),
+                               ),
+                               PrayerTimeWidget("İşa", "05:05"),
 
 
+                               Padding(
+                                 padding:  const EdgeInsets.symmetric(horizontal: 8.0),
+                                 child: Divider(color: Colors.black12, thickness: 0.8,),
+                               ),
+                               PrayerTimeWidget("Gecə Yarısı", "05:05"),
 
 
 
-                           ],
+
+
+                             ],
+                           ),
                          ),
                        ),
 
